@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Cliente> //Sirve para usarlo como lista, es aconsejable
+
+<h1>Listado de Clientes</h1>
+
+<table class="table">
+    <thead>
+        <!--El metodo DisplayNameFor me trae del modelo importado los nombres de los campos del mismo-->
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            <th>@Html.DisplayNameFor(model => model.Cuit)</th>
+            <th>@Html.DisplayNameFor(model => model.RazonSocial)</th>
+            <th>@Html.DisplayNameFor(model => model.Domicilio)</th>
+            <th>@Html.DisplayNameFor(model => model.Provincia)</th>
+        </tr>
+    </thead>
+    <!--Cuando se coloca el arroba con los corchetes es para escribir c#-->
+    @{
+        //Se va cargando con el foreach los datos del objeto cliente
+        foreach(var cliente in ViewBag.Cliente)
+        {
+            <tr>
+                <td>@cliente.Id</td>
+                <td>@cliente.Cuit</td>
+                <td>@cliente.RazonSocial</td>
+                <td>@cliente.Domicilio</td>
+                <td>@cliente.Provincia</td>
+            </tr>
+        }
+    }
+</table>
