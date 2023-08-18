@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Cliente> //Sirve para usarlo como lista, es aconsejable
 
-<h1>Listado de Clientes</h1>
+<h2>Listado de Clientes</h2>
 
 <table class="table">
     <thead>
@@ -11,20 +11,29 @@
             <th>@Html.DisplayNameFor(model => model.RazonSocial)</th>
             <th>@Html.DisplayNameFor(model => model.Domicilio)</th>
             <th>@Html.DisplayNameFor(model => model.Provincia)</th>
+            <th>@Html.Label("Acciones")</th>
         </tr>
     </thead>
     <!--Cuando se coloca el arroba con los corchetes es para escribir c#-->
     @{
-        //Se va cargando con el foreach los datos del objeto cliente
-        foreach(var cliente in ViewBag.Cliente)
+        if(ViewBag.Cliente != null)
         {
-            <tr>
-                <td>@cliente.Id</td>
-                <td>@cliente.Cuit</td>
-                <td>@cliente.RazonSocial</td>
-                <td>@cliente.Domicilio</td>
-                <td>@cliente.Provincia</td>
-            </tr>
+            //Se va cargando con el foreach los datos del objeto cliente
+            foreach (var cliente in ViewBag.Cliente)
+            {
+                <tr>
+                    <td>@cliente.Id</td>
+                    <td>@cliente.Cuit</td>
+                    <td>@cliente.RazonSocial</td>
+                    <td>@cliente.Domicilio</td>
+                    <td>@cliente.Provincia</td>
+                    <td>
+                        @Html.ActionLink("Modificar","Edit","Cliente",new {id=cliente.Id},new{ @class="btn btn-primary"})
+                        @Html.ActionLink("Borrar","Delete","Cliente", new {id=cliente.Id},new{ @class="btn btn-danger"})
+                    </td>
+                </tr>
+            }
         }
+        
     }
 </table>

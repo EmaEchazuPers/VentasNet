@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Proveedor>
+
+<h2>Lista proveedores</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            <th>@Html.DisplayNameFor(model => model.Cuit)</th>
+            <th>@Html.DisplayNameFor(model => model.RazonSocial)</th>
+            <th>@Html.DisplayNameFor(model => model.Domicilio)</th>
+            <th>@Html.DisplayNameFor(model => model.Provincia)</th>
+            <th>@Html.Label("Acciones")</th>
+        </tr>
+    </thead>
+    @{
+        if (ViewBag.Proveedor != null)
+        {
+            //Se va cargando con el foreach los datos del objeto cliente
+            foreach (var prov in ViewBag.Proveedor)
+            {
+                <tr>
+                    <td>@prov.Id</td>
+                    <td>@prov.Cuit</td>
+                    <td>@prov.RazonSocial</td>
+                    <td>@prov.Domicilio</td>
+                    <td>@prov.Provincia</td>
+                    <td>
+                        @Html.ActionLink("Modificar","Modificar","Proveedor",new {id=prov.Id},new{ @class="btn btn-primary"})
+                        @Html.ActionLink("Borrar","Borrar","Proveedor", new {id=prov.Id},new{ @class="btn btn-danger"})
+                    </td>
+                </tr>
+            }
+        }
+
+    }
+</table>

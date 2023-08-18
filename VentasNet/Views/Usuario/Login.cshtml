@@ -1,0 +1,28 @@
+﻿@model Usuario
+
+<h2>Bienvenido a Ventas Net</h2>
+
+@using (Html.BeginForm("IngresoUsuario", "Usuario", FormMethod.Post))
+
+{
+    <form>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.UserName)
+                @Html.TextBoxFor(x=>x.UserName, new{@class="form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Password)
+                @Html.PasswordFor(x=>x.Password, new{@class="form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                <button class="btn btn-success" type="submit">Ingresar</button>
+            </div>
+        </div>
+    </form>
+    
+}

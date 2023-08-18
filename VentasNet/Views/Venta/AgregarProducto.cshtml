@@ -1,0 +1,45 @@
+﻿@model Producto
+
+<h2>Formulario nuevo producto</h2>
+
+@using (Html.BeginForm("GuardarProducto", "Venta", FormMethod.Post))
+
+{
+    <form>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Id)
+                @Html.TextBoxFor(model => model.Id, new{@class="form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.IdProveedor)
+                @Html.TextBoxFor(model => model.IdProveedor, new{@class="form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.NombreProducto)
+                @Html.TextBoxFor(model => model.NombreProducto, new{@class="form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Descripcion)
+                @Html.TextBoxFor(model => model.Descripcion, new{@class="form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.ImporteProducto)
+                @Html.TextBoxFor(model => model.ImporteProducto, new{@class="form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                <button class="btn btn-success" type="submit">Resgistrar</button>
+            </div>
+        </div>
+    </form>
+}

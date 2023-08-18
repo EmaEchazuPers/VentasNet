@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ProductoVendido>
+
+<h2>Lista de productos vendidos</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            <th>@Html.DisplayNameFor(model => model.IdProducto)</th>
+            <th>@Html.DisplayNameFor(model => model.IdVenta)</th>
+            <th>@Html.DisplayNameFor(model => model.Cantidad)</th>
+            <th>@Html.Label("Acciones")</th>
+        </tr>
+    </thead>
+    @{
+        if (ViewBag.ProductoVendido != null)
+        {
+            //Se va cargando con el foreach los datos del objeto cliente
+            foreach (var prod in ViewBag.ProductoVendido)
+            {
+                <tr>
+                    <td>@prod.Id</td>
+                    <td>@prod.IdProducto</td>
+                    <td>@prod.IdVenta</td>
+                    <td>@prod.Cantidad</td>
+                    <td>
+                        @Html.ActionLink("Modificar","Modificar","Venta",new {id=prod.Id},new{ @class="btn btn-primary"})
+                        @Html.ActionLink("Borrar","Borrar","Venta", new {id=prod.Id},new{ @class="btn btn-danger"})
+                    </td>
+                </tr>
+            }
+        }
+
+    }
+</table>

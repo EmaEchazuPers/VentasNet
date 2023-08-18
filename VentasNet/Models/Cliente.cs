@@ -1,4 +1,6 @@
-﻿namespace VentasNet.Models
+﻿using System.ComponentModel;
+
+namespace VentasNet.Models
 {
     public class Cliente
     {
@@ -7,6 +9,8 @@
         public string? Cuit { get; set; }
         public string? Domicilio { get; set; }
         public string? Provincia { get; set; }
+        public bool Estado { get; set; }    
 
     }
+
 }
