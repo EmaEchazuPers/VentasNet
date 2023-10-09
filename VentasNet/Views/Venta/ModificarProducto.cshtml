@@ -1,0 +1,40 @@
+﻿@using VentasNet.Infra.DTO.Request
+@model ProductoReq
+
+<h2>Formulario actualizacion producto</h2>
+
+@using (Html.BeginForm("UpdateProducto", "Venta", FormMethod.Post))
+
+{
+    <form>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.IdProveedor)
+                @Html.TextBoxFor(model => model.IdProveedor, new{@class="form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Nombre)
+                @Html.TextBoxFor(model => model.Nombre, new{@class="form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Descripcion)
+                @Html.TextBoxFor(model => model.Descripcion, new{@class="form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Importe)
+                @Html.TextBoxFor(model => model.Importe, new{@class="form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                <button class="btn btn-success" type="submit">Actualizar</button>
+            </div>
+        </div>
+    </form>
+}

@@ -1,4 +1,5 @@
-﻿@model Cliente
+﻿@using VentasNet.Infra.DTO.Request
+@model ClienteReq
 
 <h2>Formulario nuevo cliente</h2>
 
@@ -10,8 +11,12 @@
     <form>
         <div class="form-group">
             <div class="form-group col-md-4">
-                @Html.LabelFor(x=>x.Id)
-                @Html.TextBoxFor(model => model.Id, new{@class="form-control"})
+                @Html.LabelFor(x=>x.Nombre)
+                @Html.TextBoxFor(model => model.Nombre, new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Apellido)
+                @Html.TextBoxFor(model => model.Apellido, new{@class="form-control"})
             </div>
             <div class="form-group col-md-4">
                 @Html.LabelFor(x=>x.Cuit)
@@ -26,11 +31,19 @@
                 @Html.TextBoxFor(model => model.Domicilio, new{@class="form-control"})
             </div>
             <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Localidad)
+                @Html.TextBoxFor(model => model.Localidad, new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
                 @Html.LabelFor(x=>x.Provincia)
                 @Html.TextBoxFor(model => model.Provincia, new{@class="form-control"})
             </div>
             <div class="form-group col-md-4">
-                <button class="btn btn-success" type="submit">Resgistrar</button>
+                @Html.LabelFor(x=>x.Telefono)
+                @Html.TextBoxFor(model => model.Telefono, new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
+                <button class="btn btn-success" type="submit">Registrar</button>
             </div>
         </div>
     </form>

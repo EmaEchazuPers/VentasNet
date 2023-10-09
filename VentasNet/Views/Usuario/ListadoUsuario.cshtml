@@ -1,0 +1,36 @@
+﻿@using VentasNet.Infra.DTO.Request
+@model IEnumerable<UsuarioReq> 
+
+
+
+<h2>Listado de Usuarios</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>@Html.DisplayNameFor(model => model.Id)</th>*@
+            <th>@Html.DisplayNameFor(model => model.UserName)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.IdTipoUsuario)</th>            
+        </tr>
+    </thead>
+    @{
+        if (ViewBag.Usuario != null)
+        {
+            //Se va cargando con el foreach los datos del objeto cliente
+            foreach (UsuarioReq usuario in ViewBag.Usuario)
+            {
+                <tr>
+                    <td>@usuario.UserName</td>
+                    <td>@usuario.Email</td>
+                    <td>@usuario.IdTipoUsuario</td>
+                    <td>
+                        @Html.ActionLink("Modificar","ModificarUsuario","Usuario",usuario , new{ @class="btn btn-primary"})
+                        @Html.ActionLink("Borrar","DeleteUsuario","Usuario", usuario, new{ @class="btn btn-danger"})
+                    </td>
+                </tr>
+            }
+        }
+
+    }
+</table>

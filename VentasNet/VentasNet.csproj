@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\VentasNet.Infra\VentasNet.Infra.csproj" />
+  </ItemGroup>
+
 </Project>

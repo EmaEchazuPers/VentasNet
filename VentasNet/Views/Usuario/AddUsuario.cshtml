@@ -1,0 +1,28 @@
+﻿@using VentasNet.Infra.DTO.Request
+@model UsuarioReq
+
+<h2>Formulario nuevo usuario</h2>
+
+@using (Html.BeginForm("GuardarUsuario", "Usuario", FormMethod.Post))
+
+{
+    <form>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.UserName)
+                @Html.TextBoxFor(model => model.UserName, new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Password)
+                @Html.TextBoxFor(model => model.Password , new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Email)
+                @Html.TextBoxFor(model => model.Email , new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
+                <button class="btn btn-success" type="submit">Registrar</button>
+            </div>
+        </div>
+    </form>
+}

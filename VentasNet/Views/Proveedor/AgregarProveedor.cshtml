@@ -1,4 +1,5 @@
-﻿@model Proveedor
+﻿@using VentasNet.Infra.DTO.Request
+@model ProveedorReq
 
 <h2>Formulario de ingreso proveedor</h2>
 
@@ -7,10 +8,6 @@
 {
     <form>
         <div class="form-group">
-            <div class="form-group col-md-4">
-                @Html.LabelFor(x=>x.Id)
-                @Html.TextBoxFor(model => model.Id, new{@class="form-control"})
-            </div>
             <div class="form-group col-md-4">
                 @Html.LabelFor(x=>x.Cuit)
                 @Html.TextBoxFor(model => model.Cuit, new{@class="form-control"})
@@ -28,7 +25,7 @@
                 @Html.TextBoxFor(model => model.Provincia, new{@class="form-control"})
             </div>
             <div class="form-group col-md-4">
-                <button class="btn btn-success" type="submit">Guardar</button>
+                <button class="btn btn-success" type="submit">Registrar</button>
             </div>
         </div>
     </form>

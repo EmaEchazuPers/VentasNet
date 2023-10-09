@@ -1,0 +1,50 @@
+﻿@using VentasNet.Infra.DTO.Request
+@model ClienteReq
+
+<h2>Formulario modificar cliente</h2>
+
+<!--Es como crear un form, realiza la referencia con razor-->
+@using (Html.BeginForm("UpdateCliente", "Cliente", FormMethod.Post))
+
+{
+    <form>
+        <div class="form-group">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Nombre)
+                @Html.TextBoxFor(model => model.Nombre, new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Apellido)
+                @Html.TextBoxFor(model => model.Apellido, new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Cuit)
+                @Html.TextBoxFor(model => model.Cuit, new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.RazonSocial)
+                @Html.TextBoxFor(model => model.RazonSocial, new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Domicilio)
+                @Html.TextBoxFor(model => model.Domicilio, new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Localidad)
+                @Html.TextBoxFor(model => model.Localidad, new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Provincia)
+                @Html.TextBoxFor(model => model.Provincia, new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(x=>x.Telefono)
+                @Html.TextBoxFor(model => model.Telefono, new{@class="form-control"})
+            </div>
+            <div class="form-group col-md-4">
+                <button class="btn btn-success" type="submit">Actualizar</button>
+            </div>
+        </div>
+    </form>
+}
+

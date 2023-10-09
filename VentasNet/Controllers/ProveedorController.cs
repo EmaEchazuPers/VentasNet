@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using VentasNet.Entity.Models;
+using VentasNet.Infra.DTO.Request;
+using VentasNet.Infra.Interfaces;
+using VentasNet.Infra.Repositories;
 using VentasNet.Models;
-using VentasNet.Repositories;
+
 
 namespace VentasNet.Controllers
 {
@@ -11,48 +15,56 @@ namespace VentasNet.Controllers
             return View();
         }
 
-        ProveedorRepo proveedorRepo = new ProveedorRepo();
+        IProveedorRepo proveedorRepo;
+
+        public ProveedorController(IProveedorRepo _proveedorRepo)
+        {
+            proveedorRepo = _proveedorRepo;
+        }
 
         public IActionResult ListadoProveedores()
         {
-            ViewBag.Proveedor = Listados.ListaProveedor.Where(x=>x.Estado == true);
+            
+            ViewBag.Proveedor = proveedorRepo.GetProveedores();
             return View();
         }
 
-        public IActionResult AgregarProveedor(Proveedor prov)
+        public IActionResult AgregarProveedor(ProveedorReq prov)
         {
+            var proveedorResponse = proveedorRepo.AddProveedor(prov);
+
             return View();
         }
 
-        public IActionResult Modificar(int id)
+        public IActionResult GuardarProveedor(ProveedorReq prov)
         {
-            Proveedor prov = new Proveedor();
-            prov = Listados.ListaProveedor.Find(x => x.Id == id);
-            return RedirectToAction("AgregarProveedor", prov);
+            var proveedorResponse = proveedorRepo.AddProveedor(prov);
+
+            return RedirectToAction("ListadoProveedores");
         }
 
-        public IActionResult Borrar(int id) 
+        public IActionResult UpdateProveedor(ProveedorReq prov) 
         {
-            proveedorRepo.EliminarProveedor(id);
+            var proveedorResponse = proveedorRepo.UpdateProveedor(prov);
+
+            return RedirectToAction("ListadoProveedores");
+        }
+
+        public IActionResult ModificarProveedor(ProveedorReq prov)
+        {
+            var proveedor = proveedorRepo.GetProveedorCuit(prov.Cuit);
+
+            return View();
+        }
+
+        public IActionResult DeleteProveedor(ProveedorReq prov) 
+        {
+            var proveedorResponse = proveedorRepo.DeleteProveedor(prov);
+
             return RedirectToAction("ListadoProveedores");
 
         }
 
-        public IActionResult GuardarProveedor(Proveedor prov)
-        {
-            bool existe = false;
-
-            existe = proveedorRepo.VerificarProveedor(prov);
-            if (existe)
-            {
-                proveedorRepo.ModificarProveedor(prov);
-            }
-            else
-            {
-                prov.Estado = true;
-                Listados.ListaProveedor.Add(prov);
-            }
-            return RedirectToAction("ListadoProveedores");
-        }
+       
     }
 }

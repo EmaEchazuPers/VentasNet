@@ -1,58 +1,64 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VentasNet.Models;
-using VentasNet.Repositories;
-
+using VentasNet.Infra.Repositories;
+using VentasNet.Infra.DTO.Request;
+using VentasNet.Infra.Interfaces;
 
 namespace VentasNet.Controllers
 {
     public class ClienteController : Controller
-    {   
-        ClienteRepo clienteRepo = new ClienteRepo();
+    {
+        IClienteRepo clienteRepo;
+
+        public ClienteController(IClienteRepo _clienteRepo)
+        {
+            clienteRepo = _clienteRepo;
+        }
+        
 
         //Vista del listado
         public IActionResult Listado() 
         {
-            //ViewBag es una clase genérica que me acepta lo que le pasemos
-
-            ViewBag.Cliente = Listados.ListaCliente.Where(x=>x.Estado == true);
+            ViewBag.Cliente = clienteRepo.GetClientes();
 
             return View();
         }
 
-        //Lógica del botón agregar cliente
-        public IActionResult GuardarCliente(Cliente cli) 
+        public IActionResult AgregarCliente(ClienteReq cli)
         {
-            bool existe = false;
-            existe = clienteRepo.VerificarCliente(cli);
+            var clienteResponse = clienteRepo.AddCliente(cli);
 
-            if(existe) 
-            {
-                clienteRepo.ModificarCliente(cli);
-            }
-            else 
-            {
-                cli.Estado = true;
-                Listados.ListaCliente.Add(cli); //Traigo la clase estática con sus atributos y métodos
-            }
-            return RedirectToAction("Listado"); //Redirijo al metodo listado
-        }
-
-        //Vista formulario de agregar cliente
-        public IActionResult AgregarCliente(Cliente cli)
-        {
             return View();
         }
 
-        public IActionResult Edit(int id) 
+        
+        public IActionResult GuardarCliente(ClienteReq cli) 
         {
-            Cliente cli = new Cliente();
-            cli = Listados.ListaCliente.Find(x=>x.Id == id);
-            return RedirectToAction("AgregarCliente",cli);
+            var clienteResponse = clienteRepo.AddCliente(cli);
+
+            return RedirectToAction("Listado");
         }
 
-        public IActionResult Delete(int id) 
+
+        public IActionResult UpdateCliente(ClienteReq cli)
         {
-            clienteRepo.EliminarCliente(id);
+            var clienteResponse = clienteRepo.UpdateCliente(cli);
+
+            return RedirectToAction("Listado");
+        }
+
+
+        public IActionResult ModificarCliente(ClienteReq cli)
+        {
+            var cliente = clienteRepo.GetClienteCuit(cli.Cuit);
+
+            return View();
+        }
+
+        public IActionResult Delete(ClienteReq cli) 
+        {
+            var clienteResponse = clienteRepo.Delete(cli);
+
             return RedirectToAction("Listado");
         }
     }

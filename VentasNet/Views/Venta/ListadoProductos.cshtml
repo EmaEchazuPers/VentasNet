@@ -1,15 +1,16 @@
-﻿@model IEnumerable<Producto>
+﻿@*model IEnumerable<Producto>*@
+@using VentasNet.Infra.DTO.Request
+@model IEnumerable<ProductoReq>
 
 <h2>Lista de productos</h2>
 
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Id)</th>
             <th>@Html.DisplayNameFor(model => model.IdProveedor)</th>
-            <th>@Html.DisplayNameFor(model => model.NombreProducto)</th>
+            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
             <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
-            <th>@Html.DisplayNameFor(model => model.ImporteProducto)</th>
+            <th>@Html.DisplayNameFor(model => model.Importe)</th>
             <th>@Html.Label("Acciones")</th>
         </tr>
     </thead>
@@ -17,18 +18,18 @@
         if (ViewBag.Producto != null)
         {
             //Se va cargando con el foreach los datos del objeto cliente
-            foreach (var prod in ViewBag.Producto)
+            foreach (ProductoReq prod in ViewBag.Producto)
             {
                 <tr>
-                    <td>@prod.Id</td>
+                    @*<td>@prod.Id</td>*@
                     <td>@prod.IdProveedor</td>
-                    <td>@prod.NombreProducto</td>
+                    <td>@prod.Nombre</td>
                     <td>@prod.Descripcion</td>
-                    <td>@prod.ImporteProducto</td>
+                    <td>@prod.Importe</td>
                     <td>
-                        @Html.ActionLink("Vender","Vender","Venta",new {id=prod.Id},new{ @class="btn btn-warning"})
-                        @Html.ActionLink("Modificar","Modificar","Venta",new {id=prod.Id},new{ @class="btn btn-primary"})
-                        @Html.ActionLink("Borrar","Borrar","Venta", new {id=prod.Id},new{ @class="btn btn-danger"})
+                        @*Html.ActionLink("Vender","Vender","Venta",prod ,new{ @class="btn btn-warning"})*@
+                        @Html.ActionLink("Modificar","ModificarProducto","Venta",prod ,new{ @class="btn btn-primary"})
+                        @Html.ActionLink("Borrar","BorrarProducto","Venta", prod ,new{ @class="btn btn-danger"})
                     </td>
                 </tr>
             }

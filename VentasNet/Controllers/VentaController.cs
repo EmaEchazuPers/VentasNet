@@ -1,69 +1,73 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.IO.Pipes;
+using VentasNet.Infra.DTO.Request;
+using VentasNet.Infra.Interfaces;
+using VentasNet.Infra.Repositories;
 using VentasNet.Models;
-using VentasNet.Repositories;
+
 
 namespace VentasNet.Controllers
 {
     public class VentaController : Controller
     {
-        VentaRepo ventaRepo = new VentaRepo();
+        IVentaRepo ventaRepo;
         public IActionResult Index()
         {
             return View();
         }
 
+        public VentaController(IVentaRepo _ventaRepo)
+        {
+            ventaRepo = _ventaRepo;
+        }
+
         public IActionResult ListadoProductos()
         {
-            ViewBag.Producto = Listados.ListaProducto;
+            ViewBag.Producto = ventaRepo.GetProductos();
             return View();
         }
 
         public IActionResult ListadoVendidos()
         {
-            ViewBag.ProductoVendido = Listados.ListaProductoVendido;
+            //ViewBag.ProductoVendido = Listados.ListaProductoVendido;
             return View();
         }
 
-        public IActionResult AgregarProducto(Producto prod)
+        public IActionResult AgregarProducto(ProductoReq prod)
         {
+            var productoResponse = ventaRepo.AddProducto(prod);
+
             return View();
         }
 
-        public IActionResult AgregarProductoVendido(ProductoVendido prod)
+        public IActionResult GuardarProducto(ProductoReq prod)
         {
-            return View();
-        }
+            var productoResponse = ventaRepo.AddProducto(prod);
 
-        public IActionResult GuardarProducto(Producto prod)
-        {
-            bool existe = false;
-            existe = ventaRepo.VerificarProducto(prod);
-
-            if (existe)
-            {
-                ventaRepo.ModificarProducto(prod);
-            }
-            else
-            {
-                Listados.ListaProducto.Add(prod);
-            }
             return RedirectToAction("ListadoProductos");
         }
 
-        public IActionResult Modificar(int id)
+        public IActionResult UpdateProducto(ProductoReq prod)
         {
-            Producto auxiliar = new Producto();
-            auxiliar = Listados.ListaProducto.Find(x => x.Id == id);
-            
-            return RedirectToAction("AgregarProducto", auxiliar);
-        }
-        public IActionResult Borrar(int id)
-        {
-            ventaRepo.EliminarProducto(id);
+            var productoResponse = ventaRepo.UpdateProducto(prod);
 
             return RedirectToAction("ListadoProductos");
         }
+
+        public IActionResult ModificarProducto(ProductoReq prod)
+        {
+            var cliente = ventaRepo.GetNombre(prod.Nombre);
+
+            return View();
+        }
+        public IActionResult BorrarProducto(ProductoReq prod)
+        {
+            var productoResponse = ventaRepo.DeleteProducto(prod);
+
+            return RedirectToAction("ListadoProductos");
+        }
+
+        
 
         public IActionResult Vender(int id)
         {
@@ -79,5 +83,9 @@ namespace VentasNet.Controllers
             return RedirectToAction("ListadoVendidos");
         }
 
+        public IActionResult AgregarProductoVendido(ProductoVendido prod)
+        {
+            return View();
+        }
     }
 }

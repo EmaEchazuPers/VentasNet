@@ -45,7 +45,16 @@
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link text-dark" asp-area="" asp-controller="Venta" asp-action="ListadoProductos">Listado</a></li>
                                 <li><a class="nav-link text-dark" asp-area="" asp-controller="Venta" asp-action="AgregarProducto">Agregar</a></li>
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Venta" asp-action="ListadoVendidos">Vendidos</a></li>
+                                @*<li><a class="nav-link text-dark" asp-area="" asp-controller="Venta" asp-action="ListadoVendidos">Vendidos</a></li>*@
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Usuarios
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="ListadoUsuario">Listado</a></li>
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="AddUsuario">Agregar</a></li>
                             </ul>
                         </li>
                     </ul>

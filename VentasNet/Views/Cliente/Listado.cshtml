@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Cliente> //Sirve para usarlo como lista, es aconsejable
+﻿@using VentasNet.Infra.DTO.Request
+@model IEnumerable<ClienteReq> //Sirve para usarlo como lista, es aconsejable
+
+
 
 <h2>Listado de Clientes</h2>
 
@@ -6,11 +9,15 @@
     <thead>
         <!--El metodo DisplayNameFor me trae del modelo importado los nombres de los campos del mismo-->
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            @*<th>@Html.DisplayNameFor(model => model.Id)</th>*@
+            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.Apellido)</th>
             <th>@Html.DisplayNameFor(model => model.Cuit)</th>
             <th>@Html.DisplayNameFor(model => model.RazonSocial)</th>
             <th>@Html.DisplayNameFor(model => model.Domicilio)</th>
+            <th>@Html.DisplayNameFor(model => model.Localidad)</th>
             <th>@Html.DisplayNameFor(model => model.Provincia)</th>
+            <th>@Html.DisplayNameFor(model => model.Telefono)</th>
             <th>@Html.Label("Acciones")</th>
         </tr>
     </thead>
@@ -19,17 +26,21 @@
         if(ViewBag.Cliente != null)
         {
             //Se va cargando con el foreach los datos del objeto cliente
-            foreach (var cliente in ViewBag.Cliente)
+            foreach (ClienteReq cliente in ViewBag.Cliente)
             {
                 <tr>
-                    <td>@cliente.Id</td>
+                    <td>@cliente.Nombre</td>
+                    <td>@cliente.Apellido</td>
                     <td>@cliente.Cuit</td>
                     <td>@cliente.RazonSocial</td>
                     <td>@cliente.Domicilio</td>
+                    <td>@cliente.Localidad</td>
                     <td>@cliente.Provincia</td>
+                    <td>@cliente.Telefono</td>
                     <td>
-                        @Html.ActionLink("Modificar","Edit","Cliente",new {id=cliente.Id},new{ @class="btn btn-primary"})
-                        @Html.ActionLink("Borrar","Delete","Cliente", new {id=cliente.Id},new{ @class="btn btn-danger"})
+                        @*@Html.ActionLink("Modificar","Edit","Cliente",new {id=cliente.Id},new{ @class="btn btn-primary"})*@
+                        @Html.ActionLink("Modificar","ModificarCliente","Cliente",cliente , new{ @class="btn btn-primary"})
+                        @Html.ActionLink("Borrar","Delete","Cliente", cliente, new{ @class="btn btn-danger"})
                     </td>
                 </tr>
             }

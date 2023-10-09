@@ -1,11 +1,13 @@
-﻿@model IEnumerable<Proveedor>
+﻿@*model IEnumerable<Proveedor>*@
+@using VentasNet.Infra.DTO.Request
+@model IEnumerable<ProveedorReq>
 
 <h2>Lista proveedores</h2>
 
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            @*<th>@Html.DisplayNameFor(model => model.Id)</th>*@
             <th>@Html.DisplayNameFor(model => model.Cuit)</th>
             <th>@Html.DisplayNameFor(model => model.RazonSocial)</th>
             <th>@Html.DisplayNameFor(model => model.Domicilio)</th>
@@ -17,17 +19,17 @@
         if (ViewBag.Proveedor != null)
         {
             //Se va cargando con el foreach los datos del objeto cliente
-            foreach (var prov in ViewBag.Proveedor)
+            foreach (ProveedorReq prov in ViewBag.Proveedor)
             {
                 <tr>
-                    <td>@prov.Id</td>
+                    @*<td>@prov.Id</td>*@
                     <td>@prov.Cuit</td>
                     <td>@prov.RazonSocial</td>
                     <td>@prov.Domicilio</td>
                     <td>@prov.Provincia</td>
                     <td>
-                        @Html.ActionLink("Modificar","Modificar","Proveedor",new {id=prov.Id},new{ @class="btn btn-primary"})
-                        @Html.ActionLink("Borrar","Borrar","Proveedor", new {id=prov.Id},new{ @class="btn btn-danger"})
+                        @Html.ActionLink("Modificar","ModificarProveedor","Proveedor",prov ,new{ @class="btn btn-primary"})
+                        @Html.ActionLink("Borrar","DeleteProveedor","Proveedor", prov ,new{ @class="btn btn-danger"})
                     </td>
                 </tr>
             }
