@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using VentasNet.Entity.Data;
 using VentasNet.Infra.Interfaces;
 using VentasNet.Infra.Repositories;
+using VentasNet.Infra.Services.Interface;
+using VentasNet.Infra.Services.Repo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,8 @@ builder.Services.AddScoped<IClienteRepo, ClienteRepo>();
 builder.Services.AddScoped<IProveedorRepo, ProveedorRepo>();
 builder.Services.AddScoped<IVentaRepo, VentaRepo>();
 builder.Services.AddScoped<IUsuarioRepo, UsuarioRepo>();
+
+builder.Services.AddScoped<IClienteService, ClienteService>();
 
 var app = builder.Build();
 

@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-using VentasNet.Entity.Data;
+﻿using VentasNet.Entity.Data;
 using VentasNet.Entity.Models;
 using VentasNet.Infra.DTO.Request;
 using VentasNet.Infra.DTO.Response;
 using VentasNet.Infra.Interfaces;
-using VentasNet.Models;
+using VentasNet.Infra.Services.Interface;
+using VentasNet.Infra.Services.Mapeo;
 
 namespace VentasNet.Infra.Repositories
 {
@@ -12,9 +12,11 @@ namespace VentasNet.Infra.Repositories
     {
         private readonly VentasNetContext _context;
 
-        public ClienteRepo(VentasNetContext context) 
+        private readonly IClienteService _clienteService;
+        public ClienteRepo(VentasNetContext context, IClienteService clienteService) 
         {
             _context = context;
+            _clienteService = clienteService;
         }
 
         public ClienteResponse AddCliente(ClienteReq objCliente) 
@@ -29,18 +31,21 @@ namespace VentasNet.Infra.Repositories
                 {
                     try
                     {
-                        var clienteNew = MapeoCliente(objCliente);
+                        var clienteNew = ClienteMapeo.clienteModelo(objCliente);
                         clienteNew.Estado = true;
                         clienteNew.FechaAlta = DateTime.Now;
 
-                        _context.Add(clienteNew);
-                        _context.SaveChanges();
+                        _clienteService.CrearNuevoCliente(clienteNew);
+
+                        
                         clienteResponse.Guardar = true;
                         clienteResponse.RazonSocial = clienteNew.RazonSocial;
                         clienteResponse.Mensaje = "Se agrego el cliente";
+                        
                     }
                     catch (Exception ex)
                     {
+                        //Crear un diccionario de errores
                         clienteResponse.Mensaje = "Ocurrio un error al agregar cliente";
                         clienteResponse.Guardar = false;
                     }
@@ -51,6 +56,7 @@ namespace VentasNet.Infra.Repositories
             return clienteResponse;
         }
 
+        /*
         public Cliente MapeoCliente(ClienteReq objCliente)
         {
             Cliente cliente = new Cliente()
@@ -72,6 +78,7 @@ namespace VentasNet.Infra.Repositories
 
             return cliente;
         }
+        */
 
         public ClienteResponse UpdateCliente(ClienteReq objCliente)
         {
@@ -83,6 +90,7 @@ namespace VentasNet.Infra.Repositories
             {
                 try
                 {
+                    //armar funcion para validad cliente
                     existeCliente.Cuit = objCliente.Cuit == null ? string.Empty : objCliente.Cuit;
                     existeCliente.RazonSocial = objCliente.RazonSocial == null ? string.Empty : objCliente.RazonSocial ;
                     existeCliente.Nombre = objCliente.Nombre == null ? string.Empty : objCliente.Nombre;
@@ -92,8 +100,13 @@ namespace VentasNet.Infra.Repositories
                     existeCliente.Provincia = objCliente.Provincia == null ? string.Empty : objCliente.Provincia;
                     existeCliente.Telefono = objCliente.Telefono == null ? string.Empty : objCliente.Telefono;
 
-                    _context.Update(existeCliente);
-                    _context.SaveChanges();
+                    //existeCliente = validarCliente(objCliente, existeCliente)
+                    //public Cliente ValidadCliente(ClienteReq objCliente, Cliente existeCliente) -> Formato de funcion
+                    //
+                    _clienteService.ModificarCliente(existeCliente);
+
+                    //_context.Update(existeCliente); --> Esto se hace en service
+                    //_context.SaveChanges();
 
                     clienteResponse.Guardar = true;
                     clienteResponse.RazonSocial = existeCliente.RazonSocial;
@@ -123,9 +136,10 @@ namespace VentasNet.Infra.Repositories
                 {
                     existeCliente.Estado = false;
                     existeCliente.FechaBaja = DateTime.Now;
+                    _clienteService.EliminarCliente(existeCliente.IdCliente);
 
-                    _context.Update(existeCliente);
-                    _context.SaveChanges();
+                    //_context.Update(existeCliente);
+                    //_context.SaveChanges();
 
                     clienteResponse.Guardar = true;
                     clienteResponse.Mensaje = "Se elimino el cliente";

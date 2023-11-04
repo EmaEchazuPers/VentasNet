@@ -15,7 +15,7 @@ namespace VentasNet.Infra.Interfaces
 
         public ClienteResponse AddCliente(ClienteReq objCliente);
 
-        public Cliente MapeoCliente(ClienteReq objCliente);
+       // public Cliente MapeoCliente(ClienteReq objCliente);
 
         public ClienteResponse UpdateCliente(ClienteReq objCliente);
 
