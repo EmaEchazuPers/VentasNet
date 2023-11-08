@@ -1,5 +1,4 @@
-﻿//using System.Security.Cryptography.X509Certificates;
-using VentasNet.Entity.Data;
+﻿using VentasNet.Entity.Data;
 using VentasNet.Entity.Models;
 using VentasNet.Infra.DTO.Request;
 using VentasNet.Infra.DTO.Response;
@@ -58,16 +57,7 @@ namespace VentasNet.Infra.Repositories
         public Producto MapeoProducto(ProductoReq objProducto)
         {
             Producto producto = objProducto.ToModel();
-            /*
-            Producto producto = new Producto()
-            {
-               IdProducto = objProducto.IdProducto,
-               IdProveedor = objProducto.IdProveedor,
-               Nombre     = objProducto.Nombre,
-               Descripcion= objProducto.Descripcion,
-               Importe    = objProducto.Importe      
-            };
-            */
+            
             return producto;
         }
 

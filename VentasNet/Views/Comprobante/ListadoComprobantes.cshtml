@@ -1,0 +1,35 @@
+﻿@using VentasNet.Entity.Models;
+@model IEnumerable<Comprobante>
+
+
+<h2>Lista de comprobantes generados</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+            <th>@Html.DisplayNameFor(model => model.NroSucursal)</th>
+            <th>@Html.DisplayNameFor(model => model.NroInicioCbte)</th>
+            <th>@Html.DisplayNameFor(model => model.NroUltimoCbt)</th>
+        </tr>
+    </thead>
+    @{
+        if (ViewBag.Comprobante != null)
+        {
+            //Se va cargando con el foreach los datos del objeto cliente
+            foreach (var comp in ViewBag.Comprobante)
+            {
+                <tr>
+                    <td>@comp.Nombre</td>
+                    <td>@comp.Descripcion</td>
+                    <td>@comp.NroSucursal</td>
+                    <td>@comp.NroInicioCbte</td>
+                    <td>@comp.NroUltimoCbt</td>
+                </tr>
+            }
+        }
+
+    }
+</table>
+

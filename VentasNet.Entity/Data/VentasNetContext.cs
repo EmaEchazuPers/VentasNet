@@ -21,6 +21,9 @@ namespace VentasNet.Entity.Data
         }
 
         public virtual DbSet<Cliente> Cliente { get; set; }
+        public virtual DbSet<Comprobante> Comprobante { get; set; }
+        public virtual DbSet<FormasDePagos> FormasDePagos { get; set; }
+        public virtual DbSet<MovimientoDeComprobantes> MovimientoDeComprobantes { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
         public virtual DbSet<ProductoVendido> ProductoVendido { get; set; }
         public virtual DbSet<Proveedor> Proveedor { get; set; }
@@ -35,18 +38,7 @@ namespace VentasNet.Entity.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new Configurations.ClienteConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.ProductoConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.ProductoVendidoConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.ProveedorConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.UsuarioConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.VentaConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.VwClienteConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.VwProductoConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.VwProductoVendidoConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.VwProveedorConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.VwUsuarioConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.VwVentaConfiguration());
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(VentasNetContext).Assembly);
 
             OnModelCreatingPartial(modelBuilder);
         }

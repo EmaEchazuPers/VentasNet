@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.IO.Pipes;
 using VentasNet.Infra.DTO.Request;
 using VentasNet.Infra.Interfaces;
-using VentasNet.Infra.Repositories;
 using VentasNet.Models;
 
 
@@ -10,59 +8,58 @@ namespace VentasNet.Controllers
 {
     public class VentaController : Controller
     {
-        IVentaRepo ventaRepo;
+        IVentaRepo _ventaRepo;
         public IActionResult Index()
         {
             return View();
         }
 
-        public VentaController(IVentaRepo _ventaRepo)
+        public VentaController(IVentaRepo ventaRepo)
         {
-            ventaRepo = _ventaRepo;
+            _ventaRepo = ventaRepo;
         }
 
         public IActionResult ListadoProductos()
         {
-            ViewBag.Producto = ventaRepo.GetProductos();
+            ViewBag.Producto = _ventaRepo.GetProductos();
             return View();
         }
 
         public IActionResult ListadoVendidos()
         {
-            //ViewBag.ProductoVendido = Listados.ListaProductoVendido;
             return View();
         }
 
         public IActionResult AgregarProducto(ProductoReq prod)
         {
-            var productoResponse = ventaRepo.AddProducto(prod);
+            var productoResponse = _ventaRepo.AddProducto(prod);
 
             return View();
         }
 
         public IActionResult GuardarProducto(ProductoReq prod)
         {
-            var productoResponse = ventaRepo.AddProducto(prod);
+            var productoResponse = _ventaRepo.AddProducto(prod);
 
             return RedirectToAction("ListadoProductos");
         }
 
         public IActionResult UpdateProducto(ProductoReq prod)
         {
-            var productoResponse = ventaRepo.UpdateProducto(prod);
+            var productoResponse = _ventaRepo.UpdateProducto(prod);
 
             return RedirectToAction("ListadoProductos");
         }
 
         public IActionResult ModificarProducto(ProductoReq prod)
         {
-            var cliente = ventaRepo.GetNombre(prod.Nombre);
+            var cliente = _ventaRepo.GetNombre(prod.Nombre);
 
             return View();
         }
         public IActionResult BorrarProducto(ProductoReq prod)
         {
-            var productoResponse = ventaRepo.DeleteProducto(prod);
+            var productoResponse = _ventaRepo.DeleteProducto(prod);
 
             return RedirectToAction("ListadoProductos");
         }

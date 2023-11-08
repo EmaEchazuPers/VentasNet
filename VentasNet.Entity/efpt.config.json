@@ -20,6 +20,18 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Comprobante]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[FormasDePagos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MovimientoDeComprobantes]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Producto]",
          "ObjectType": 0
       },
@@ -77,6 +89,7 @@
    "UseLegacyPluralizer": false,
    "UseManyToManyEntity": false,
    "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,
