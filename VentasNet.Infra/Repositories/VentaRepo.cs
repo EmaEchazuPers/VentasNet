@@ -1,9 +1,12 @@
 ﻿using VentasNet.Entity.Data;
 using VentasNet.Entity.Models;
+using VentasNet.Infra.DTO.Common;
 using VentasNet.Infra.DTO.Request;
 using VentasNet.Infra.DTO.Response;
 using VentasNet.Infra.Interfaces;
+using VentasNet.Infra.Services.Interface;
 using VentasNet.Infra.Services.Mapeo;
+using VentasNet.Infra.Services.Repo;
 using VentasNet.Models;
 
 namespace VentasNet.Infra.Repositories
@@ -11,10 +14,12 @@ namespace VentasNet.Infra.Repositories
     public class VentaRepo : IVentaRepo
     {
         private readonly VentasNetContext _context;
+        private readonly IProductoService _productoService;
 
-        public VentaRepo(VentasNetContext context)
+        public VentaRepo(VentasNetContext context, IProductoService productoService)
         {
             _context = context;
+            _productoService = productoService;
         }
 
         public ProductoResponse AddProducto(ProductoReq objProducto)
@@ -29,10 +34,10 @@ namespace VentasNet.Infra.Repositories
                 {
                     try
                     {
-                        var productoNew = MapeoProducto(objProducto);
+                        var productoNew = ProductoMapeo.ReqAModelo(objProducto);
 
-                        _context.Add(productoNew);
-                        _context.SaveChanges();
+                        _productoService.CrearNuevoProducto(productoNew);
+
                         productoResponse.Guardar = true;
                         productoResponse.Nombre = productoNew.Nombre;
                         productoResponse.Mensaje = "El producto se agrego";
@@ -47,20 +52,6 @@ namespace VentasNet.Infra.Repositories
             return productoResponse;
         }
 
-        public Producto GetNombre(string nombre)
-        {
-            var producto = _context.Producto.Where(x => x.Nombre == nombre).FirstOrDefault();
-
-            return producto;
-        }
-
-        public Producto MapeoProducto(ProductoReq objProducto)
-        {
-            Producto producto = objProducto.ToModel();
-            
-            return producto;
-        }
-
         public ProductoResponse UpdateProducto(ProductoReq objProducto)
         {
             ProductoResponse productoResponse = new ProductoResponse();
@@ -71,13 +62,9 @@ namespace VentasNet.Infra.Repositories
             {
                 try
                 {
-                    existeProducto.IdProveedor = objProducto.IdProveedor == null ? 0 : objProducto.IdProveedor;
-                    existeProducto.Descripcion = objProducto.Descripcion == null ? string.Empty : objProducto.Descripcion;
-                    existeProducto.Nombre = objProducto.Nombre == null ? string.Empty : objProducto.Nombre;
-                    existeProducto.Importe = objProducto.Importe == null ? 0 : objProducto.Importe;
+                    var producto = ValidarModelo.ValidarProducto(objProducto, existeProducto);
 
-                    _context.Update(existeProducto);
-                    _context.SaveChanges();
+                    _productoService.ModificarProducto(producto);
 
                     productoResponse.Guardar = true;
                     productoResponse.Nombre = existeProducto.Nombre;
@@ -104,8 +91,7 @@ namespace VentasNet.Infra.Repositories
             {
                 try
                 {
-                    _context.Remove(existeProducto);
-                    _context.SaveChanges();
+                    _productoService.EliminarProducto(objProducto.IdProducto);
 
                     productoResponse.Guardar = true;
                     productoResponse.Mensaje = "El producto se elimino";
@@ -141,6 +127,13 @@ namespace VentasNet.Infra.Repositories
                 listadoProductos.Add(producto);
             }
             return listadoProductos;
+        }
+
+        public Producto GetNombre(string nombre)
+        {
+            var producto = _context.Producto.Where(x => x.Nombre == nombre).FirstOrDefault();
+
+            return producto;
         }
 
     }

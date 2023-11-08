@@ -12,8 +12,7 @@ namespace VentasNet.Infra.Interfaces
     public interface IVentaRepo
     {
         public ProductoResponse AddProducto(ProductoReq objProducto);
-        public Producto GetNombre(string nombre);
-        public Producto MapeoProducto(ProductoReq objProducto);
+        public Producto GetNombre(string nombre);        
         public ProductoResponse UpdateProducto(ProductoReq objProducto);
         public ProductoResponse DeleteProducto(ProductoReq objProducto);
         public List<ProductoReq> GetProductos();

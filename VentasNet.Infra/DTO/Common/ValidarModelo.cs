@@ -38,5 +38,15 @@ namespace VentasNet.Infra.DTO.Common
 
             return existeUsuario;
         }
+
+        public static Producto ValidarProducto(ProductoReq objProducto, Producto existeProducto)
+        {
+            existeProducto.IdProveedor = objProducto.IdProveedor == null ? 0 : objProducto.IdProveedor;
+            existeProducto.Descripcion = objProducto.Descripcion == null ? string.Empty : objProducto.Descripcion;
+            existeProducto.Nombre = objProducto.Nombre == null ? string.Empty : objProducto.Nombre;
+            existeProducto.Importe = objProducto.Importe == null ? 0 : objProducto.Importe;
+
+            return existeProducto;
+        }
     }
 }

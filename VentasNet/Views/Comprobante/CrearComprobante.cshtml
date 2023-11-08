@@ -9,23 +9,21 @@
 {
     <form class="row g-3">
         <div class="col-md-4">
+            @Html.Label("Numero de Comprobante")
+            @Html.TextBoxFor(x => x.NroInicioCbte, new{@class="form-control"})
+            @Html.TextBoxFor(x => x.NroUltimoCbt, new{@class="form-control"})
+        </div>
+        <div class="col-md-4">
             @Html.LabelFor(x => x.Nombre)
             @Html.TextBoxFor(x => x.Nombre, new{@class="form-control"})
         </div>
         <div class="col-md-4">
-            <label for="validationDefault02" class="form-label">Last name</label>
-            <input type="text" class="form-control" id="validationDefault02" value="Otto" required>
+            @Html.LabelFor(x => x.NombreCorto)
+            @Html.TextBoxFor(x => x.NombreCorto, new{@class="form-control"})
         </div>
         <div class="col-md-4">
-            <label for="validationDefaultUsername" class="form-label">Username</label>
-            <div class="input-group">
-                <span class="input-group-text" id="inputGroupPrepend2"></span>
-                <input type="text" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" required>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <label for="validationDefault03" class="form-label">City</label>
-            <input type="text" class="form-control" id="validationDefault03" required>
+            @Html.LabelFor(x => x.Descripcion)
+            @Html.TextBoxFor(x => x.Descripcion, new{@class="form-control"})
         </div>
         <div class="col-md-3">
             <label for="validationDefault04" class="form-label">State</label>
