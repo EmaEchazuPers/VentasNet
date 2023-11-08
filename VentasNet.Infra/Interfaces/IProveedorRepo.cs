@@ -12,7 +12,6 @@ namespace VentasNet.Infra.Interfaces
     public interface IProveedorRepo
     {
         public object AddProveedor(ProveedorReq objProveedor);
-        public Proveedor MapeoProveedor(ProveedorReq objProveedor);
         public Proveedor GetProveedorCuit(string cuit);
         public List<ProveedorReq> GetProveedores();
         public ProveedorResponse UpdateProveedor(ProveedorReq objProveedor);

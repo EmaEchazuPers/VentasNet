@@ -14,7 +14,6 @@ namespace VentasNet.Infra.Interfaces
         public UsuarioResponse AddUsuario(UsuarioReq usu);
         public bool ExisteUsuario(UsuarioReq usu);
         public Usuario GetUsuario(string userName, string passUser);
-        public Usuario MapeoUsuario(UsuarioReq usu);
         public List<UsuarioReq> GetListaUsuarios();
         public UsuarioResponse UpdateUsuario(UsuarioReq usu);
         public UsuarioResponse DeleteUsuario(UsuarioReq usu);

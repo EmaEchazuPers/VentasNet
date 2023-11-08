@@ -23,6 +23,7 @@ builder.Services.AddScoped<IVentaRepo, VentaRepo>();
 builder.Services.AddScoped<IUsuarioRepo, UsuarioRepo>();
 
 builder.Services.AddScoped<IClienteService, ClienteService>();
+builder.Services.AddScoped<IProveedorService, ProveedorService>();
 
 var app = builder.Build();
 

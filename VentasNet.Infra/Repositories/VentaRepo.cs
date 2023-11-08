@@ -4,6 +4,7 @@ using VentasNet.Entity.Models;
 using VentasNet.Infra.DTO.Request;
 using VentasNet.Infra.DTO.Response;
 using VentasNet.Infra.Interfaces;
+using VentasNet.Infra.Services.Mapeo;
 using VentasNet.Models;
 
 namespace VentasNet.Infra.Repositories
@@ -56,6 +57,8 @@ namespace VentasNet.Infra.Repositories
 
         public Producto MapeoProducto(ProductoReq objProducto)
         {
+            Producto producto = objProducto.ToModel();
+            /*
             Producto producto = new Producto()
             {
                IdProducto = objProducto.IdProducto,
@@ -64,7 +67,7 @@ namespace VentasNet.Infra.Repositories
                Descripcion= objProducto.Descripcion,
                Importe    = objProducto.Importe      
             };
-
+            */
             return producto;
         }
 

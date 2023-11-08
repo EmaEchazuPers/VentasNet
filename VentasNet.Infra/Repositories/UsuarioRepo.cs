@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using VentasNet.Entity.Data;
+﻿using VentasNet.Entity.Data;
 using VentasNet.Entity.Models;
+using VentasNet.Infra.DTO.Common;
 using VentasNet.Infra.DTO.Request;
 using VentasNet.Infra.DTO.Response;
 using VentasNet.Infra.Interfaces;
-using VentasNet.Models;
+using VentasNet.Infra.Services.Interface;
+using VentasNet.Infra.Services.Mapeo;
 
 namespace VentasNet.Infra.Repositories
 {
@@ -12,30 +13,12 @@ namespace VentasNet.Infra.Repositories
     {
         private readonly VentasNetContext _context;
 
-        public UsuarioRepo(VentasNetContext context)
+        private readonly IUsuarioService _usuarioService;
+
+        public UsuarioRepo(VentasNetContext context, IUsuarioService usuarioService)
         {
             _context = context;
-        }
-
-        public Usuario GetUsuario(string userName, string passUser)
-        {
-            var usuario = _context.Usuario.Where(x => x.UserName == userName && x.Password == passUser).FirstOrDefault();
-
-            return usuario;
-        }
-
-        public bool ExisteUsuario(UsuarioReq usu)
-        {
-            var usuario = GetUsuario(usu.UserName, usu.Password);
-
-            if(usuario != null)
-            {
-                return true;
-            }
-            else 
-            {
-                return false;
-            }
+            _usuarioService = usuarioService;
         }
 
         public UsuarioResponse AddUsuario(UsuarioReq usu)
@@ -50,12 +33,14 @@ namespace VentasNet.Infra.Repositories
                 {
                     try
                     {
-                        var usuarioNew = MapeoUsuario(usu);
+                        var usuarioNew = UsuarioMapeo.ReqAModelo(usu);
+
                         usuarioNew.Estado = true;
                         usuarioNew.FechaAlta = DateTime.Now;
 
-                        _context.Add(usuarioNew);
-                        _context.SaveChanges();
+                        _usuarioService.CrearNuevoUsuario(usuarioNew);
+
+                        
                         usuarioResponse.Guardar = true;
                         usuarioResponse.Mensaje = "Se agrego el usuario";
                     }
@@ -71,21 +56,82 @@ namespace VentasNet.Infra.Repositories
             return usuarioResponse;
         }
 
-        public Usuario MapeoUsuario(UsuarioReq usu)
+        public UsuarioResponse UpdateUsuario(UsuarioReq usu)
         {
-            Usuario usuario = new Usuario()
+            UsuarioResponse usuarioResponse = new UsuarioResponse();
+
+            var existeUsuario = GetUsuario(usu.UserName, usu.Password);
+
+            if (existeUsuario != null)
             {
-                IdUsuario     = usu.IdUsuario     ,
-                UserName      = usu.UserName      ,
-                Password      = usu.Password      ,
-                Email         = usu.Email         ,
-                Estado        = usu.Estado        ,
-                IdTipoUsuario = usu.IdTipoUsuario ,
-                FechaAlta     = usu.FechaAlta     ,
-                FechaBaja     = usu.FechaBaja      
-            };
+                try
+                {
+                    var usuario = ValidarModelo.ValidarUsuario(usu, existeUsuario);
+
+                    _usuarioService.ModificarUsuario(usuario);
+
+                    _context.Update(existeUsuario);
+                    _context.SaveChanges();
+
+                    usuarioResponse.Guardar = true;
+                    usuarioResponse.Mensaje = "Se modifico el usuario";
+                }
+                catch (Exception ex)
+                {
+                    usuarioResponse.Mensaje = "Ocurrio un error al modificar usuario";
+                    usuarioResponse.Guardar = false;
+                }
+
+            }
+
+            return usuarioResponse;
+        }
+
+        public UsuarioResponse DeleteUsuario(UsuarioReq usu)
+        {
+            UsuarioResponse usuarioResponse = new UsuarioResponse();
+
+            var existeUsuario = GetUsuario(usu.UserName, usu.Password);
+
+            if (existeUsuario != null)
+            {
+                try
+                {
+                    _usuarioService.EliminarUsuario(existeUsuario.IdUsuario);
+
+                    usuarioResponse.Guardar = true;
+                    usuarioResponse.Mensaje = "Se elimino el usuario";
+
+                }
+                catch (Exception ex)
+                {
+                    usuarioResponse.Mensaje = "Ocurrio un error al eliminar usuario";
+                    usuarioResponse.Guardar = false;
+                }
+            }
+
+            return usuarioResponse;
+        }
+
+        public Usuario GetUsuario(string userName, string passUser)
+        {
+            var usuario = _context.Usuario.Where(x => x.UserName == userName && x.Password == passUser).FirstOrDefault();
 
             return usuario;
+        }
+
+        public bool ExisteUsuario(UsuarioReq usu)
+        {
+            var usuario = GetUsuario(usu.UserName, usu.Password);
+
+            if (usuario != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public List<UsuarioReq> GetListaUsuarios()
@@ -109,70 +155,6 @@ namespace VentasNet.Infra.Repositories
                 listadoUsuarios.Add(usuario);
             }
             return listadoUsuarios;
-        }
-
-        public UsuarioResponse UpdateUsuario(UsuarioReq usu)
-        {
-            UsuarioResponse usuarioResponse = new UsuarioResponse();
-
-            var existeUsuario = GetUsuario(usu.UserName, usu.Password);
-
-            if (existeUsuario != null)
-            {
-                try
-                {
-                    existeUsuario.UserName = usu.UserName == null ? string.Empty : usu.UserName;
-                    existeUsuario.Password = usu.Password == null ? string.Empty : usu.Password;
-                    existeUsuario.Email = usu.Email == null ? string.Empty : usu.Email;
-                    existeUsuario.IdTipoUsuario = usu.IdTipoUsuario == null ? 0 : usu.IdTipoUsuario;
-                    
-
-                    _context.Update(existeUsuario);
-                    _context.SaveChanges();
-
-                    usuarioResponse.Guardar = true;
-                    usuarioResponse.Mensaje = "Se modifico el usuario";
-                }
-                catch (Exception ex)
-                {
-                    usuarioResponse.Mensaje = "Ocurrio un error al modificar usuario";
-                    usuarioResponse.Guardar = false;
-                }
-
-            }
-
-            return usuarioResponse;
-        }
-
-
-        public UsuarioResponse DeleteUsuario(UsuarioReq usu)
-        {
-            UsuarioResponse usuarioResponse = new UsuarioResponse();
-
-            var existeUsuario = GetUsuario(usu.UserName, usu.Password);
-
-            if (existeUsuario != null)
-            {
-                try
-                {
-                    existeUsuario.Estado = false;
-                    existeUsuario.FechaBaja = DateTime.Now;
-
-                    _context.Update(existeUsuario);
-                    _context.SaveChanges();
-
-                    usuarioResponse.Guardar = true;
-                    usuarioResponse.Mensaje = "Se elimino el usuario";
-
-                }
-                catch (Exception ex)
-                {
-                    usuarioResponse.Mensaje = "Ocurrio un error al eliminar usuario";
-                    usuarioResponse.Guardar = false;
-                }
-            }
-
-            return usuarioResponse;
         }
     }
 }

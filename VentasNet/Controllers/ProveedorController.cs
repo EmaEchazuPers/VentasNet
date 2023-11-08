@@ -1,20 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VentasNet.Entity.Models;
 using VentasNet.Infra.DTO.Request;
 using VentasNet.Infra.Interfaces;
-using VentasNet.Infra.Repositories;
-using VentasNet.Models;
 
 
 namespace VentasNet.Controllers
 {
     public class ProveedorController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         IProveedorRepo proveedorRepo;
 
         public ProveedorController(IProveedorRepo _proveedorRepo)

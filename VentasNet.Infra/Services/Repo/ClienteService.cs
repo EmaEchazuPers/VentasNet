@@ -46,7 +46,6 @@ namespace VentasNet.Infra.Services.Repo
             }
             
         }
-
         
     }
 }

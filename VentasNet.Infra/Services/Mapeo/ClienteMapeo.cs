@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VentasNet.Entity.Models;
+﻿using VentasNet.Entity.Models;
 using VentasNet.Infra.DTO.Request;
 
 namespace VentasNet.Infra.Services.Mapeo
 {
     public static class ClienteMapeo
     {
-        public static Cliente clienteModelo(ClienteReq objCliente)
+        public static Cliente ReqAModelo(ClienteReq objCliente)
         {
+
             Cliente cliente = new Cliente()
             {
                 IdCliente = objCliente.IdCliente,
@@ -27,7 +23,7 @@ namespace VentasNet.Infra.Services.Mapeo
                 FechaAlta = objCliente.FechaAlta,
                 FechaBaja = objCliente.FechaBaja,
                 IdUsuario = objCliente.IdUsuario
-            };
+            };            
 
             return cliente;
         }
