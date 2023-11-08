@@ -21,10 +21,12 @@ builder.Services.AddScoped<IClienteRepo, ClienteRepo>();
 builder.Services.AddScoped<IProveedorRepo, ProveedorRepo>();
 builder.Services.AddScoped<IVentaRepo, VentaRepo>();
 builder.Services.AddScoped<IUsuarioRepo, UsuarioRepo>();
+builder.Services.AddScoped<IComprobanteRepo, ComprobanteRepo>();
 
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<IProveedorService, ProveedorService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
 
 var app = builder.Build();
 
