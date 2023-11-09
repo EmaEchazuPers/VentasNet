@@ -1,6 +1,5 @@
 ﻿using VentasNet.Entity.Data;
 using VentasNet.Entity.Models;
-using VentasNet.Infra.DTO.Request;
 using VentasNet.Infra.Services.Interface;
 
 namespace VentasNet.Infra.Services.Repo

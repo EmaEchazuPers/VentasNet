@@ -6,8 +6,6 @@ using VentasNet.Infra.DTO.Response;
 using VentasNet.Infra.Interfaces;
 using VentasNet.Infra.Services.Interface;
 using VentasNet.Infra.Services.Mapeo;
-using VentasNet.Infra.Services.Repo;
-using VentasNet.Models;
 
 namespace VentasNet.Infra.Repositories
 {

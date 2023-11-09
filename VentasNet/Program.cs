@@ -26,6 +26,7 @@ builder.Services.AddScoped<IComprobanteRepo, ComprobanteRepo>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<IProveedorService, ProveedorService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
 
 
 var app = builder.Build();
