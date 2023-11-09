@@ -107,5 +107,10 @@ namespace VentasNet.Infra.Repositories
             return listaClientes;
         }
 
+        public void SaveCliente(Cliente cliente)
+        {
+
+        }
+
     }
 }

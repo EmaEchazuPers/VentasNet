@@ -36,5 +36,10 @@ namespace VentasNet.Controllers
             return RedirectToAction("ListadoComprobantes");
         }
 
+        public void GuardarCliente(Cliente cliente)
+        {
+            _comprobanteRepo.SaveCliente(cliente);
+        }
+
     }
 }
