@@ -13,5 +13,7 @@ namespace VentasNet.Infra.Interfaces
         public List<ComprobanteReq> GetComprobantes();
 
         public List<Producto> GetProductos();
+
+        public List<Cliente> GetClientes();
     }
 }

@@ -56,5 +56,26 @@ namespace VentasNet.Infra.Repositories
             return listaProductos;
         }
 
+        public List<Cliente> GetClientes() 
+        {
+            List<Cliente> listaClientes = new List<Cliente>();
+
+            var lista = _context.Cliente.Where(x => x.Estado != false).ToList();
+
+            foreach(var item in lista)
+            {
+                Cliente cliente = new Cliente();
+
+                cliente.Nombre= item.Nombre;
+                cliente.Cuit = item.Cuit;
+                cliente.RazonSocial = item.RazonSocial;
+
+                listaClientes.Add(cliente);
+
+            }
+
+            return listaClientes;
+        }
+
     }
 }

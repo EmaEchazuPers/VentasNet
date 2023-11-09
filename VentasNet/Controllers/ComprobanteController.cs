@@ -23,8 +23,8 @@ namespace VentasNet.Controllers
 
         public IActionResult CrearComprobante()
         {
-            List<Producto> listaProductos = _comprobanteRepo.GetProductos();
-            ViewBag.Productos = listaProductos;
+            ViewBag.Productos = _comprobanteRepo.GetProductos();
+            ViewBag.Clientes = _comprobanteRepo.GetClientes();
 
             return View();
         }
