@@ -1,6 +1,9 @@
 ﻿@using VentasNet.Infra.DTO.Request
 @model ComprobanteReq 
 
+@{
+    List<VentasNet.Entity.Models.Producto> lista = ViewBag.Productos;
+}
 
 <h2>Comprobante de Venta</h2>
 
@@ -24,6 +27,34 @@
             @Html.LabelFor(x => x.Descripcion)
             @Html.TextBoxFor(x => x.Descripcion, new{@class="form-control"})
         </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Importe</th>
+                    <th scope="col">IdProveedor</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if(ViewBag.Productos != null)
+                    {
+                        foreach(VentasNet.Entity.Models.Producto prod in lista)
+                        {
+                            <tr>
+                                <th scope="row">@prod.Nombre</th>
+                                <td>@prod.Descripcion</td>
+                                <td>@prod.Importe</td>
+                                <td>@prod.IdProveedor</td>
+                            </tr>
+                        }
+                    }
+
+                }
+                
+            </tbody>
+        </table>
         
         <div class="col-12">
             <button class="btn btn-primary" type="submit">Cargar</button>

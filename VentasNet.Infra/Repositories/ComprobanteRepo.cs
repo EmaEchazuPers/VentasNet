@@ -1,4 +1,5 @@
 ﻿using VentasNet.Entity.Data;
+using VentasNet.Entity.Models;
 using VentasNet.Infra.DTO.Request;
 using VentasNet.Infra.Interfaces;
 
@@ -32,6 +33,27 @@ namespace VentasNet.Infra.Repositories
                 listadoComprobantes.Add(comprobante);
             }
             return listadoComprobantes;
+        }
+
+        public List<Producto> GetProductos()
+        {
+            List<Producto> listaProductos = new List<Producto> ();
+
+            var lista = _context.Producto.Where(x => x.IdProducto != 0).ToList();
+
+            foreach(var item in lista)
+            {
+                Producto producto = new Producto();
+
+                producto.Nombre = item.Nombre;
+                producto.Descripcion = item.Descripcion;
+                producto.Importe = item.Importe;
+                producto.IdProveedor = item.IdProveedor;
+
+                listaProductos.Add(producto);
+            }
+
+            return listaProductos;
         }
 
     }
