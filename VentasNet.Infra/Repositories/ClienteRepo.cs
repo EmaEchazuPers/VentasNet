@@ -46,7 +46,6 @@ namespace VentasNet.Infra.Repositories
                     }
                     catch (Exception ex)
                     {
-                        //Crear un diccionario de errores
                         clienteResponse.Mensaje = "Ocurrio un error al agregar cliente";
                         clienteResponse.Guardar = false;
                     }

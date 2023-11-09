@@ -9,6 +9,7 @@ namespace VentasNet.Infra.DTO.Response
     public class ComprobanteResponse
     {
         public string Nombre { get; set; }
+        public string Mensaje { get; set; }
 
         public bool Guardar { get; set; } = false;
     }

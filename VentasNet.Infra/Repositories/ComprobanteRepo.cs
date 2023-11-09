@@ -1,7 +1,9 @@
 ﻿using VentasNet.Entity.Data;
 using VentasNet.Entity.Models;
 using VentasNet.Infra.DTO.Request;
+using VentasNet.Infra.DTO.Response;
 using VentasNet.Infra.Interfaces;
+using VentasNet.Infra.Services.Mapeo;
 
 namespace VentasNet.Infra.Repositories
 {
@@ -12,6 +14,34 @@ namespace VentasNet.Infra.Repositories
         public ComprobanteRepo(VentasNetContext context)
         {
             _context = context;
+        }
+
+        public void AddComprobante(ComprobanteReq objComprobante) 
+        {
+            ComprobanteResponse comprobanteResponse = new ComprobanteResponse();
+
+            if(objComprobante.Nombre != null) 
+            {
+                try
+                {
+                    var comprobanteNew = ComprobanteMapeo.ReqAModelo(objComprobante);
+
+                    comprobanteNew.FechaMovimiento = DateTime.Now;
+
+                    _context.Add(comprobanteNew);
+                    _context.SaveChanges();
+
+                    comprobanteResponse.Guardar = true;
+                    comprobanteResponse.Nombre = comprobanteNew.Nombre;
+                    comprobanteResponse.Mensaje = "Se agrego correctamente el comprobante";
+
+                }
+                catch(Exception ex)
+                {
+                    comprobanteResponse.Mensaje = "Ocurrio un error al agregar el comprobante";
+                    comprobanteResponse.Guardar = false;
+                }
+            }
         }
 
         public List<ComprobanteReq> GetComprobantes()

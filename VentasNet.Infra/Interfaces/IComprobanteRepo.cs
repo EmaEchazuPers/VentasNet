@@ -15,5 +15,7 @@ namespace VentasNet.Infra.Interfaces
         public List<Producto> GetProductos();
 
         public List<Cliente> GetClientes();
+
+        public void AddComprobante(ComprobanteReq objComprobante);
     }
 }

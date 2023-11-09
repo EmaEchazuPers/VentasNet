@@ -31,7 +31,7 @@ namespace VentasNet.Controllers
 
         public IActionResult GuardarComprobante(ComprobanteReq comprobante)
         {
-            //var comprobanteResponse = _comprobanteRepo.AddComprobante(comprobante);
+            _comprobanteRepo.AddComprobante(comprobante);
 
             return RedirectToAction("ListadoComprobantes");
         }
