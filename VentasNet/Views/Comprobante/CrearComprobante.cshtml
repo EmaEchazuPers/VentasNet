@@ -14,19 +14,31 @@
     <form class="row g-3">
         <div class="row g-3">
             <div class="col">
-                <div class="col-md-4">
+                <div class="col">
                     @Html.Label("Numero de Comprobante")
-                    @Html.TextBoxFor(x => x.NroInicioCbte, new{@class="form-control"})
+                    <div class="row">
+                        <div class="col">
+                            @Html.TextBoxFor(x => x.NroInicioCbte, new{@class="form-control"})
+                        </div>
+                        <div class="col">
+                            @Html.TextBoxFor(x => x.NroUltimoCbt, new{@class="form-control"})
+                        </div>
+                    </div>
+                    
                 </div>
-                <div class="col-md-4">
+                <div class="col">
                     @Html.LabelFor(x => x.Nombre)
                     @Html.TextBoxFor(x => x.Nombre, new{@class="form-control"})
                 </div>
-                <div class="col-md-4">
+                <div class="col">
+                    @Html.LabelFor(x => x.NroSucursal)
+                    @Html.TextBoxFor(x => x.NroSucursal, new{@class="form-control"})
+                </div>
+                <div class="col">
                     @Html.LabelFor(x => x.NombreCorto)
                     @Html.TextBoxFor(x => x.NombreCorto, new{@class="form-control"})
                 </div>
-                <div class="col-md-4">
+                <div class="col">
                     @Html.LabelFor(x => x.Descripcion)
                     @Html.TextBoxFor(x => x.Descripcion, new{@class="form-control"})
                 </div>
